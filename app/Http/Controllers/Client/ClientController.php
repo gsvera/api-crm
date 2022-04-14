@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Respuesta;
 use App\Models\Client\Client;
+use App\Models\Client\LogContact;
 
 class ClientController extends Controller
 {
@@ -32,6 +33,36 @@ class ClientController extends Controller
 
         try{
             $res->data = $clients->_getClientXCompany(request('id_company'));
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+        return response()->json($res->getResult());
+    }
+    public function getClientsActive()
+    {
+        $res = new Respuesta;
+        $clients = new Client;
+
+        try{
+            $res->data = $clients->_clientsActive(request('id_company'));
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+        return response()->json($res->getResult());
+    }
+    public function clientById()
+    {
+        $res = new Respuesta;
+        $clients = new Client;
+
+        try{
+            $res->data = $clients->_clientById(request('id_client'));
         }
         catch(Exception $e)
         {
@@ -78,6 +109,38 @@ class ClientController extends Controller
 
         try{
             $res->message = $client->_delete(request('id_client'));
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+
+        return response()->json($res->getResult());
+    }
+    public function saveFollowClient()
+    {
+        $res = new Respuesta();
+        $registro = new LogContact;
+
+        try{
+            $res->message = $registro->_store(request()->all());
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+
+        return response()->json($res->getResult());
+    }
+    public function getFollowDetailByClient()
+    {
+        $res = new Respuesta;
+        $registro = new LogContact;
+
+        try{
+            $res->data = $registro->_getByClient(request('id_client'));
         }
         catch(Exception $e)
         {

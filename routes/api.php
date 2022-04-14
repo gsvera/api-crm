@@ -36,6 +36,10 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function(){
     Route::post('/login-app', [LoginController::class, 'login']);
     Route::get('/getModules', [ModulesController::class, 'getModules']);
 
+    Route::group(['prefix' => 'employees'], function(){
+        Route::get('getEmployeesActive', [UsuarioController::class, 'getEmployeesActive']);
+    });
+
     Route::group(['prefix' => 'statusClient'], function(){
         Route::post('newStatusClient', [StatusClientController::class, 'newStatus']);
         Route::get('getStatusClient', [StatusClientController::class, 'getStatus']);
@@ -45,9 +49,13 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function(){
     Route::group(['prefix' => 'client'], function(){
         Route::post('newClient', [ClientController::class, 'newClient']);
         Route::get('getClients', [ClientController::class, 'getClienteCompany']);
+        Route::get('getClientsActive', [ClientController::class, 'getClientsActive']);
+        Route::get('clientById', [ClientController::class, 'clientById']);
         Route::post('disabledClient', [ClientController::class, 'disabledClient']);
         Route::post('updateClient', [ClientController::class, 'updateClient']);
         Route::post('deleteClient', [ClientController::class, 'deleteClient']);
+        Route::post('saveFollowClient', [ClientController::class, 'saveFollowClient']);
+        Route::get('getFollowDetailByClient', [ClientController::class, 'getFollowDetailByClient']);
     });
     Route::group(['prefix' => 'statusTask'], function(){
         Route::post('newStatusTask', [StatusTaskController::class, 'newStatus']);

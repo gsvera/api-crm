@@ -102,4 +102,9 @@ class Usuario extends Model
 
         return "success";
     }
+    public function _employeActiveForCompany($idCompany)
+    {
+        // PRIMERO SE TIENE QUE RELACIONAR LOS EMPLEADOS CON LA COMPAÑIA ANTES DE ESTA CONSULTA
+        $employees = $this->where();
+    }
 }

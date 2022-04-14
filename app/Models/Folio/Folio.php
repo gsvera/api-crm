@@ -57,4 +57,18 @@ class Folio extends Model
         }
         return $res;
     }
+    public function _folio($modulo, $subModulo, $idCompany)
+    {
+        $folio = $this->where('modulo', $modulo)
+                ->where('sub_modulo', $subModulo)
+                ->where('id_company', $idCompany)
+                ->first();
+
+        $currentFolio = $folio->folio. "-" .$folio->count;
+        $folio->count = $folio->count + 1;
+        $folio->save();
+
+        return $currentFolio;
+    }
+    
 }

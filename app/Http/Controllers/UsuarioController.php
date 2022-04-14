@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Usuario;
+use App\Models\Respuesta;
 
 class UsuarioController extends Controller
 {
@@ -84,5 +85,22 @@ class UsuarioController extends Controller
         {
             return "Exception: ". $e->getMessage();
         }
+    }
+    public function getEmployeesActive()
+    {
+        $res = new Respuesta;
+        $users = new Usuario;
+
+        try{
+            // PRIMERO SE TIENE QUE RELACIONAR LOS EMPLEADOS CON LA COMPAÑIA ANTES DE ESTA CONSULTA
+            $data = $users->_employeActiveForCompany(request('id_company'));
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessate();
+        }
+
+        return response()->json($res->getResult());
     }
 }
