@@ -89,6 +89,9 @@ Route::group(['prefix' => 'panel', 'middleware' => 'auth:sanctum'], function(){
         Route::get('get-companys', [CompanyController::class, 'getCompanys']);
         Route::post('delete-company', [CompanyController::class, 'deleteCompany']);
         Route::post('update-company', [CompanyController::class, 'updateCompany']);
+        Route::post('add-user-relathion', [CompanyController::class, 'addUserRelathion']);
+        Route::get('get-user-relathion', [CompanyController::class, 'getUerRelathion']);
+        Route::post('delete-user-relathion', [CompanyController::class, 'deleteUserRelathion']);
     });
     Route::group(['prefix' => 'plan'], function(){
         Route::post('new-plan', [PlanController::class, 'newPlan']);

@@ -96,7 +96,7 @@ class Company extends Model
         $relation = new Company_X_Usuario;
         $relation->where('id_company', $data['id_company'])->get();
         
-        if($company['number_user'] < $relation->count()){
+        if($data['number_user'] < $relation->count()){
             $res["message"] = "El numero de usuarios no puede ser menor a los existentes";
             $res['error'] = true;
             return $res;

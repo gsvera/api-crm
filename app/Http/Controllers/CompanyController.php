@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\Respuesta;
+use App\Models\Company_X_Usuario;
 
 class CompanyController extends Controller
 {
@@ -60,7 +62,7 @@ class CompanyController extends Controller
             $updateCom = new Company;
 
             $result = $updateCom->_updateCompany(request()->all());
-
+            
             if($result['error'] == true){
                 return response()->json(["error" => true, "message" => $result['message'], "data" => ""]);
             }
@@ -70,5 +72,54 @@ class CompanyController extends Controller
         {
             return "Exception: ".$e->getMessage();
         }
+    }
+    public function addUserRelathion()
+    {
+        $res = new Respuesta;
+        $relathion = new Company_X_Usuario;
+
+        try{
+            $res->message = $relathion->_store(request()->all());
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+
+        return response()->json($res->getResult());
+    }
+    public function getUerRelathion()
+    {
+        $res = new Respuesta;
+        $relathion = new Company_X_Usuario;
+
+        try{
+            $result = $relathion->_getData(request('id_company'));
+            $res->data = $result;
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getMessage();
+        }
+        return response()->json($res->getResult());
+    }
+    public function deleteUserRelathion()
+    {
+        $res = new Respuesta;
+        $relation = new Company_X_Usuario;
+
+        try{
+            $result = $relation->_deleteRelathion(request("id_pivote"));
+            $res->message = $result;
+        }
+        catch(Exception $e)
+        {
+            $res->error = true;
+            $res->message = $e->getmessage();
+        }
+
+        return response()->json($res->getResult());
     }
 }
